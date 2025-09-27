@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skripsi Asisten — Jasa Penulisan Ilmiah</title>
+    <meta name="description"
+        content="Skripsi Asisten: jasa penulisan ilmiah, translate Indo–Inggris, cek Turnitin, konversi skripsi ke jurnal, penyesuaian format, dan bimbingan online." />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        soft: '0 10px 30px rgba(0,0,0,0.08)',
+                    },
+                    keyframes: {
+                        floaty: {
+                            '0%,100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        gradientMove: {
+                            '0%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                            '100%': { 'background-position': '0% 50%' },
+                        },
+                    },
+                    animation: {
+                        floaty: 'floaty 6s ease-in-out infinite',
+                        gradient: 'gradientMove 8s ease infinite',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Animated red-white gradient backdrop */
+        .bg-hero-gradient {
+            background: linear-gradient(120deg, #780400, #fca5a5, #ffffff, #780400);
+            background-size: 300% 300%;
+        }
+
+        /* Reveal base (JS will toggle .is-revealed) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .reveal.is-revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Subtle section divider wave */
+        .divider-wave {
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .06));
+        }
+
+        /* Fancy underline for headings */
+        .fancy-underline {
+            position: relative;
+            display: inline-block;
+        }
+
+        .fancy-underline::after {
+            content: "";
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            bottom: -6px;
+            height: 6px;
+            background: linear-gradient(90deg, rgba(220, 38, 38, .2), rgba(255, 255, 255, .9), rgba(220, 38, 38, .2));
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+
+<body class="font-display text-slate-800 antialiased">
+    <!-- Navbar -->
+    <header id="top" class="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-white/40">
+        <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <!-- Logo -->
+                <a href="#top" class="flex items-center gap-2 group">
+                    <div
+                        class="h-9 w-9 rounded-xl bg-gradient-to-br from-red-600 to-rose-700 text-white grid place-items-center shadow-soft">
+                        <!-- Dummy logo -->
+                        <!-- <span class="text-lg font-bold">SA</span> -->
+                        <img class="rounded-xl" src="../images/logo.jpg" alt="">
+                    </div>
+                    <div class="leading-tight">
+                        <div class="font-extrabold tracking-tight">Skripsi Assistant</div>
+                        <div class="text-xs text-slate-500">Solusi Cepat & Tepat</div>
+                    </div>
+                </a>
+
+                <!-- Nav links -->
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#layanan"
+                        class="nav-link text-sm font-medium text-slate-700 hover:text-red-700 transition">Layanan</a>
+                    <a href="#alasan"
+                        class="nav-link text-sm font-medium text-slate-700 hover:text-red-700 transition">Kenapa
+                        Kami</a>
+                    <a href="#proses"
+                        class="nav-link text-sm font-medium text-slate-700 hover:text-red-700 transition">Alur</a>
+                    <a href="#kontak"
+                        class="nav-link text-sm font-medium text-slate-700 hover:text-red-700 transition">Kontak</a>
+                    <a href="#harga"
+                        class="nav-link text-sm font-medium text-slate-700 hover:text-red-700 transition">Harga</a>
+                </div>
+
+                <div class="hidden md:block">
+                    <a href="#kontak"
+                        class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 px-4 py-2 text-white shadow-soft hover:opacity-95 transition">
+                        <span>Mulai Konsultasi</span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="menuBtn"
+                    class="md:hidden inline-flex items-center justify-center rounded-xl p-2 text-slate-700 hover:bg-slate-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile menu -->
+            <div id="mobileMenu" class="md:hidden hidden pb-4">
+                <div class="grid gap-2">
+                    <a href="#layanan" class="nav-link block rounded-lg px-3 py-2 hover:bg-slate-100">Layanan</a>
+                    <a href="#alasan" class="nav-link block rounded-lg px-3 py-2 hover:bg-slate-100">Kenapa Kami</a>
+                    <a href="#proses" class="nav-link block rounded-lg px-3 py-2 hover:bg-slate-100">Alur</a>
+                    <a href="#harga" class="nav-link block rounded-lg px-3 py-2 hover:bg-slate-100">Harga</a>
+                    <a href="#kontak" class="nav-link block rounded-lg px-3 py-2 hover:bg-slate-100">Kontak</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden bg-hero-gradient animate-gradient">
+        <div class="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/80"></div>
+
+        <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+            <div class="grid lg:grid-cols-2 gap-10 items-center">
+                <div class="reveal">
+                    <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight text-slate-900">
+                        Wujudkan Naskah Akademik <span
+                            class="bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-rose-700">Cepat, Rapi,
+                            Lolos</span>
+                    </h1>
+                    <p class="mt-4 text-lg text-slate-700 max-w-xl">Skripsi Assistant membantu penulisan ilmiah,
+                        translate Indonesia–Inggris, cek Turnitin, konversi skripsi ke jurnal, penyusuaian format
+                        kampus, hingga bimbingan online, semua dalam satu tempat.</p>
+                    <div class="mt-8 flex flex-wrap gap-3">
+                        <a href="#kontak"
+                            class="rounded-xl bg-gradient-to-r from-red-600 to-rose-700 px-5 py-3 text-white font-semibold shadow-soft hover:opacity-90 transition">
+                            Konsultasi Gratis
+                        </a>
+                        <a href="#layanan"
+                            class="rounded-xl border border-red-200 bg-white/70 backdrop-blur px-5 py-3 text-red-700 font-semibold hover:bg-white transition">
+                            Lihat Layanan
+                        </a>
+                    </div>
+
+                    <div class="mt-10 grid grid-cols-3 gap-6 text-center">
+                        <div class="rounded-2xl bg-white/80 backdrop-blur p-4 shadow-soft">
+                            <div class="text-2xl font-extrabold text-red-700">1.000+</div>
+                            <div class="text-sm text-slate-600">Klien Puas</div>
+                        </div>
+                        <div class="rounded-2xl bg-white/80 backdrop-blur p-4 shadow-soft">
+                            <div class="text-2xl font-extrabold text-red-700"><span class="align-middle">≤</span> 7 hari
+                            </div>
+                            <div class="text-sm text-slate-600">Pengerjaan Cepat*</div>
+                        </div>
+                        <div class="rounded-2xl bg-white/80 backdrop-blur p-4 shadow-soft">
+                            <div class="text-2xl font-extrabold text-red-700">98%</div>
+                            <div class="text-sm text-slate-600">Repeat Order</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal lg:justify-self-end">
+                    <div class="relative">
+                        <div
+                            class="absolute -inset-4 bg-gradient-to-r from-red-600/20 to-rose-700/20 blur-2xl rounded-3xl">
+                        </div>
+                        <div
+                            class="relative rounded-3xl bg-white/90 p-6 shadow-soft ring-1 ring-white/60 animate-floaty">
+                            <div class="grid gap-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="../images/logo.jpg" class="h-9 w-9 grid place-items-center rounded-xl alt="">
+                  <!-- <span class=" h-9 w-9 grid place-items-center rounded-xl bg-red-600 text-white
+                                        font-bold">SA</span> -->
+                                    <div>
+                                        <div class="font-semibold">Skripsi Assistant</div>
+                                        <!-- <div class="text-xs text-slate-500">Skripsi Asisten</div> -->
+                                    </div>
+                                </div>
+                                <div class="rounded-2xl bg-gradient-to-r from-red-50 to-rose-50 p-4">
+                                    <div class="text-sm text-slate-700">“Butuh penulisan cepat dan tetap akademis? Kami
+                                        bantu dari outline sampai publish jurnal.”</div>
+                                </div>
+                                <ul class="text-sm text-slate-700 grid gap-2">
+                                    <li class="flex items-center gap-2"><span
+                                            class="h-2 w-2 rounded-full bg-red-600"></span> Penulisan Ilmiah end-to-end
+                                    </li>
+                                    <li class="flex items-center gap-2"><span
+                                            class="h-2 w-2 rounded-full bg-red-600"></span> Turnitin & paraphrase aman
+                                    </li>
+                                    <li class="flex items-center gap-2"><span
+                                            class="h-2 w-2 rounded-full bg-red-600"></span> Bimbingan online fleksibel
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider wave -->
+        <svg class="divider-wave -mb-1 w-full" viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#fff"
+                d="M0,64L60,64C120,64,240,64,360,53.3C480,43,600,21,720,16C840,11,960,21,1080,42.7C1200,64,1320,96,1380,112L1440,128L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z" />
+        </svg>
+    </section>
+
+
+
+    <!-- Layanan -->
+    <section id="layanan" class="py-16 sm:py-24 bg-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="reveal text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight fancy-underline">Layanan Kami</h2>
+                <p class="mt-3 text-slate-600 max-w-2xl mx-auto">Paket lengkap untuk kebutuhan akademik dan publikasi
+                    Anda.</p>
+            </div>
+
+            <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card -->
+                <article
+                    class="transform transition duration-300 hover:scale-105 hover:shadow-lg reveal rounded-2xl border border-slate-100 p-6 bg-white">
+                    <h3 class="font-semibold text-lg">Jasa Penulisan Ilmiah</h3>
+                    <p class="mt-2 text-sm text-slate-600">Dari proposal hingga full skripsi/tesis sesuai kaidah
+                        metodologi dan sitasi.</p>
+                </article>
+
+
+                <article
+                class="transform transition duration-300 hover:scale-105 hover:shadow-lg reveal rounded-2xl border border-slate-100 p-6 bg-white">
+                    <h3 class="font-semibold text-lg">Translate Indo–Inggris</h3>
+                    <p class="mt-2 text-sm text-slate-600">Terjemahan akademik yang natural dan sesuai istilah bidang.
+                    </p>
+                </article>
+                <article 
+                class="transform transition duration-300 hover:scale-105 hover:shadow-lg reveal rounded-2xl border border-slate-100 p-6 bg-white">
+                    <h3 class="font-semibold text-lg">Cek Turnitin</h3>
+                    <p class="mt-2 text-sm text-slate-600">Pengecekan originalitas + rekomendasi paraphrase yang aman.
+                    </p>
+                </article>
+                <article class="reveal rounded-2xl border border-slate-100 p-6 hover:shadow-soft transition bg-white">
+                    <h3 class="font-semibold text-lg">Konversi ke Jurnal</h3>
+                    <p class="mt-2 text-sm text-slate-600">Ubah skripsi menjadi artikel jurnal: ringkas, fokus, siap
+                        submit.</p>
+                </article>
+                <article class="reveal rounded-2xl border border-slate-100 p-6 hover:shadow-soft transition bg-white">
+                    <h3 class="font-semibold text-lg">Penyesuaian Format</h3>
+                    <p class="mt-2 text-sm text-slate-600">Ikuti pedoman kampus (margin, sitasi, daftar pustaka,
+                        layout).</p>
+                </article>
+                <article class="reveal rounded-2xl border border-slate-100 p-6 hover:shadow-soft transition bg-white">
+                    <h3 class="font-semibold text-lg">Bimbingan Online</h3>
+                    <p class="mt-2 text-sm text-slate-600">Sesi 1:1 untuk diskusi topik, metode, analisis, dan revisi.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kenapa Kami -->
+    <section id="alasan" class="py-16 sm:py-24 bg-gradient-to-b from-white to-red-50/60">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-10 items-center">
+                <div class="reveal">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight fancy-underline">Kenapa Pilih Skripsi
+                        Asisten?</h2>
+                    <ul class="mt-6 grid gap-4 text-slate-700">
+                        <li class="flex gap-3"><span
+                                class="h-2 w-2 mt-2 rounded-full bg-red-600"></span><span><strong>Kualitas
+                                    Akademik</strong> — Struktur ilmiah, sitasi rapi, dan metodologi sesuai
+                                kaidah.</span></li>
+                        <li class="flex gap-3"><span
+                                class="h-2 w-2 mt-2 rounded-full bg-red-600"></span><span><strong>Privasi &
+                                    Keamanan</strong> — Data dan dokumen Anda kami jaga.</span></li>
+                        <li class="flex gap-3"><span
+                                class="h-2 w-2 mt-2 rounded-full bg-red-600"></span><span><strong>Timeline
+                                    Jelas</strong> — Progress terukur, revisi terjadwal.</span></li>
+                        <li class="flex gap-3"><span
+                                class="h-2 w-2 mt-2 rounded-full bg-red-600"></span><span><strong>Dukungan
+                                    Penuh</strong> — Chat & meeting online fleksibel.</span></li>
+                    </ul>
+                </div>
+                <div class="reveal">
+                    <div class="relative rounded-3xl bg-white p-6 shadow-soft ring-1 ring-slate-100">
+                        <div class="grid sm:grid-cols-3 gap-4">
+                            <div class="rounded-2xl bg-red-600 text-white p-5 text-center">
+                                <div class="text-3xl font-extrabold">24/7</div>
+                                <div class="text-sm opacity-90">Support</div>
+                            </div>
+                            <div class="rounded-2xl bg-rose-100 text-rose-900 p-5 text-center">
+                                <div class="text-3xl font-extrabold">100%</div>
+                                <div class="text-sm opacity-90">Rahasia</div>
+                            </div>
+                            <div class="rounded-2xl bg-white text-red-700 p-5 text-center border border-red-200">
+                                <div class="text-3xl font-extrabold">A+</div>
+                                <div class="text-sm opacity-90">Kerapian</div>
+                            </div>
+                        </div>
+                        <p class="mt-5 text-sm text-slate-600">*Kecepatan pengerjaan menyesuaikan kompleksitas dan
+                            antrian.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proses / Alur -->
+    <section id="proses" class="py-16 sm:py-24 bg-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="reveal text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight fancy-underline">Alur Kerja</h2>
+                <p class="mt-3 text-slate-600 max-w-2xl mx-auto">Transparan, efisien, dan bisa dipantau setiap tahapnya.
+                </p>
+            </div>
+            <div class="mt-10 grid lg:grid-cols-4 sm:grid-cols-2 gap-6">
+                <div class="reveal rounded-2xl p-6 border border-slate-100">
+                    <div class="text-sm text-slate-500">01</div>
+                    <h3 class="mt-1 font-semibold">Brief Singkat</h3>
+                    <p class="mt-2 text-sm text-slate-600">Topik, pedoman kampus, contoh referensi.</p>
+                </div>
+                <div class="reveal rounded-2xl p-6 border border-slate-100">
+                    <div class="text-sm text-slate-500">02</div>
+                    <h3 class="mt-1 font-semibold">Penawaran & Timeline</h3>
+                    <p class="mt-2 text-sm text-slate-600">Rincian biaya, pembagian bab, jadwal revisi.</p>
+                </div>
+                <div class="reveal rounded-2xl p-6 border border-slate-100">
+                    <div class="text-sm text-slate-500">03</div>
+                    <h3 class="mt-1 font-semibold">Pengerjaan & Review</h3>
+                    <p class="mt-2 text-sm text-slate-600">Progress per bab, sesi tanya jawab online.</p>
+                </div>
+                <div class="reveal rounded-2xl p-6 border border-slate-100">
+                    <div class="text-sm text-slate-500">04</div>
+                    <h3 class="mt-1 font-semibold">Final & Support</h3>
+                    <p class="mt-2 text-sm text-slate-600">File final + pendampingan sampai acc.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Harga sederhana -->
+    <section id="harga" class="py-16 sm:py-24 bg-gradient-to-b from-red-50/60 to-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="reveal text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight fancy-underline">Paket Harga</h2>
+                <p class="mt-3 text-slate-600 max-w-2xl mx-auto">Sesuaikan kebutuhan—bisa custom paket.</p>
+            </div>
+            <div class="mt-10 grid lg:grid-cols-3 gap-6">
+                <div class="reveal rounded-2xl bg-white p-6 shadow-soft ring-1 ring-slate-100">
+                    <h3 class="font-semibold">Basic</h3>
+                    <div class="mt-2 text-3xl font-extrabold text-red-700">Mulai 499K</div>
+                    <ul class="mt-4 text-sm text-slate-600 grid gap-2">
+                        <li>✔ Penyesuaian Format</li>
+                        <li>✔ Translate ≤ 3.000 kata</li>
+                        <li>✔ Cek Turnitin</li>
+                    </ul>
+                    <a href="#kontak"
+                        class="mt-6 inline-block rounded-xl border border-red-200 px-4 py-2 text-red-700 hover:bg-red-50 transition">Pilih
+                        Paket</a>
+                </div>
+                <div
+                    class="reveal rounded-2xl bg-gradient-to-b from-white to-rose-50 p-6 shadow-soft ring-2 ring-red-600">
+                    <h3 class="font-semibold">Pro</h3>
+                    <div class="mt-2 text-3xl font-extrabold text-red-700">Mulai 1.99Jt</div>
+                    <ul class="mt-4 text-sm text-slate-600 grid gap-2">
+                        <li>✔ Penulisan per Bab</li>
+                        <li>✔ Bimbingan Online</li>
+                        <li>✔ Cek Turnitin + Paraphrase</li>
+                    </ul>
+                    <a href="#kontak"
+                        class="mt-6 inline-block rounded-xl bg-gradient-to-r from-red-600 to-rose-700 px-4 py-2 text-white shadow-soft hover:opacity-90 transition">Pilih
+                        Paket</a>
+                </div>
+                <div class="reveal rounded-2xl bg-white p-6 shadow-soft ring-1 ring-slate-100">
+                    <h3 class="font-semibold">Publish</h3>
+                    <div class="mt-2 text-3xl font-extrabold text-red-700">Mulai 2.99Jt</div>
+                    <ul class="mt-4 text-sm text-slate-600 grid gap-2">
+                        <li>✔ Konversi ke Jurnal</li>
+                        <li>✔ Penyusunan sesuai template</li>
+                        <li>✔ Pendampingan Submit</li>
+                    </ul>
+                    <a href="#kontak"
+                        class="mt-6 inline-block rounded-xl border border-red-200 px-4 py-2 text-red-700 hover:bg-red-50 transition">Pilih
+                        Paket</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontak -->
+    <section id="kontak" class="py-16 sm:py-24 bg-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="reveal text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight fancy-underline">Hubungi Kami</h2>
+                <p class="mt-3 text-slate-600 max-w-2xl mx-auto">Siap diskusi? Pilih kanal favorit Anda.</p>
+            </div>
+
+            <div class="mt-10 grid md:grid-cols-2 gap-6">
+                <div class="reveal rounded-2xl p-6 border border-slate-100">
+                    <h3 class="font-semibold">Chat Instan</h3>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <a href="https://wa.me/6281234567890" target="_blank" rel="noopener"
+                            class="rounded-xl bg-green-500/90 px-4 py-2 text-white hover:opacity-90 transition">WhatsApp</a>
+                        <a href="https://t.me/username" target="_blank" rel="noopener"
+                            class="rounded-xl bg-sky-500/90 px-4 py-2 text-white hover:opacity-90 transition">Telegram</a>
+                        <a href="https://instagram.com/skripsiasisten" target="_blank" rel="noopener"
+                            class="rounded-xl bg-gradient-to-r from-rose-600 to-red-600 px-4 py-2 text-white hover:opacity-90 transition">Instagram</a>
+                    </div>
+                    <p class="mt-4 text-sm text-slate-600">Jam layanan: 08.00–22.00 WIB (Senin–Minggu)</p>
+                </div>
+
+                <div class="reveal rounded-2xl p-6 border border-slate-100">
+                    <h3 class="font-semibold">Kirim Email</h3>
+                    <form class="mt-4 grid gap-3"
+                        onsubmit="event.preventDefault(); alert('Terima kasih! Kami akan menghubungi Anda.');">
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <input required type="text" placeholder="Nama"
+                                class="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-red-600/30" />
+                            <input required type="email" placeholder="Email"
+                                class="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-red-600/30" />
+                        </div>
+                        <input type="text" placeholder="Subjek"
+                            class="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-red-600/30" />
+                        <textarea required rows="4" placeholder="Pesan"
+                            class="rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-red-600/30"></textarea>
+                        <button
+                            class="justify-self-start rounded-xl bg-gradient-to-r from-red-600 to-rose-700 px-5 py-3 text-white font-semibold shadow-soft hover:opacity-90 transition">Kirim</button>
+                    </form>
+                    <p class="mt-3 text-sm text-slate-600">Atau email langsung: <a class="text-red-700 font-semibold"
+                            href="mailto:halo@skripsiasisten.id">halo@skripsiasisten.id</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-100">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <div
+                            class="h-9 w-9 rounded-xl bg-gradient-to-br from-red-600 to-rose-700 text-white grid place-items-center shadow-soft">
+                            SA</div>
+                        <div class="font-extrabold">Skripsi Asisten</div>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-600">Partner Anda untuk karya ilmiah yang cepat, rapi, dan siap
+                        publish.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold">Navigasi</h4>
+                    <ul class="mt-3 grid gap-2 text-sm text-slate-600">
+                        <li><a href="#layanan" class="hover:text-red-700 transition">Layanan</a></li>
+                        <li><a href="#alasan" class="hover:text-red-700 transition">Kenapa Kami</a></li>
+                        <li><a href="#proses" class="hover:text-red-700 transition">Alur</a></li>
+                        <li><a href="#harga" class="hover:text-red-700 transition">Harga</a></li>
+                        <li><a href="#kontak" class="hover:text-red-700 transition">Kontak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold">Kontak</h4>
+                    <ul class="mt-3 grid gap-2 text-sm text-slate-600">
+                        <li>WhatsApp: <a class="text-red-700" href="https://wa.me/6281234567890" target="_blank"
+                                rel="noopener">+62 812-3456-7890</a></li>
+                        <li>Instagram: <a class="text-red-700" href="https://instagram.com/skripsiasisten"
+                                target="_blank" rel="noopener">@skripsiasisten</a></li>
+                        <li>Email: <a class="text-red-700"
+                                href="mailto:halo@skripsiasisten.id">halo@skripsiasisten.id</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t text-sm text-slate-500 flex flex-wrap items-center justify-between gap-3">
+                <span>© <span id="year"></span> Skripsi Asisten. All rights reserved.</span>
+                <span>Made with ❤ in Indonesia</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating CTA -->
+    <a href="#kontak"
+        class="fixed bottom-5 right-5 rounded-full shadow-soft bg-gradient-to-r from-red-600 to-rose-700 text-white px-5 py-3 hover:opacity-90 transition">Chat
+        Sekarang</a>
+
+    <!-- JS: smooth scroll, active link, reveal on scroll -->
+    <script>
+        // Dynamic year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+        // Smooth scroll for nav links
+        const links = document.querySelectorAll('a[href^="#"]');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (!href || href === '#' || href === '#0') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Active nav highlighting on scroll
+        const sections = ['#layanan', '#alasan', '#proses', '#harga', '#kontak'].map(s => document.querySelector(s));
+        const navLinks = document.querySelectorAll('.nav-link');
+        const onScroll = () => {
+            let current = null;
+            const scrollY = window.pageYOffset + 120; // offset for sticky header
+            sections.forEach(sec => {
+                if (sec && sec.offsetTop <= scrollY) current = sec;
+            });
+            navLinks.forEach(a => a.classList.remove('text-red-700'));
+            if (current) {
+                const id = '#' + current.id;
+                document.querySelectorAll(`a[href="${id}"]`).forEach(a => a.classList.add('text-red-700'));
+            }
+        };
+        window.addEventListener('scroll', onScroll);
+        onScroll();
+
+        // Reveal on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>
